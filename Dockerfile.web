@@ -1,0 +1,12 @@
+FROM node:20-alpine AS build
+ARG APP
+WORKDIR /app
+COPY package.json ./
+COPY apps ./apps
+RUN npm install --workspace=@itsm/${APP} --include-workspace-root=false
+RUN npm run build -w @itsm/${APP}
+
+FROM nginx:alpine
+ARG APP
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/apps/${APP}/dist /usr/share/nginx/html

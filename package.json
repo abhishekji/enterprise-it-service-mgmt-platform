@@ -1,0 +1,35 @@
+{
+  "name": "enterprise-itsm-platform",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "packages/*",
+    "services/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "infra:up": "docker compose up -d kafka redis mongo-auth mongo-incident mongo-request mongo-asset mongo-workflow",
+    "infra:down": "docker compose down",
+    "stack:up": "docker compose up -d --build",
+    "dev:services": "npm-run-all --parallel dev:gateway dev:auth dev:incident dev:request dev:asset dev:workflow",
+    "dev:apps": "npm-run-all --parallel dev:shell dev:mfe-incidents dev:mfe-requests dev:mfe-assets",
+    "dev": "npm-run-all --parallel dev:services dev:apps",
+    "dev:gateway": "npm run dev -w @itsm/api-gateway",
+    "dev:auth": "npm run dev -w @itsm/auth-service",
+    "dev:incident": "npm run dev -w @itsm/incident-service",
+    "dev:request": "npm run dev -w @itsm/request-service",
+    "dev:asset": "npm run dev -w @itsm/asset-service",
+    "dev:workflow": "npm run dev -w @itsm/workflow-service",
+    "dev:shell": "npm run dev -w @itsm/shell",
+    "dev:mfe-incidents": "npm run dev -w @itsm/mfe-incidents",
+    "dev:mfe-requests": "npm run dev -w @itsm/mfe-requests",
+    "dev:mfe-assets": "npm run dev -w @itsm/mfe-assets",
+    "seed": "npm run seed -w @itsm/auth-service"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

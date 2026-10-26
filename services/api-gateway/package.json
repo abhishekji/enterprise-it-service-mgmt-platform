@@ -1,0 +1,14 @@
+{
+  "name": "@itsm/api-gateway",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@itsm/common": "*",
+    "http-proxy-middleware": "^3.0.3"
+  }
+}

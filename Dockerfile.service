@@ -1,0 +1,9 @@
+FROM node:20-alpine
+ARG SERVICE
+ENV SERVICE=${SERVICE}
+WORKDIR /app
+COPY package.json ./
+COPY packages ./packages
+COPY services ./services
+RUN npm install --omit=dev --workspace=@itsm/common --workspace=@itsm/${SERVICE} --include-workspace-root=false
+CMD ["sh", "-c", "node services/${SERVICE}/src/index.js"]
